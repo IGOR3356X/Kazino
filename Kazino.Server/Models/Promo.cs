@@ -28,7 +28,7 @@ public partial class Promo
     public int? TagId { get; set; }
 
     public virtual Category? Category { get; set; }
-
+    // Можно попробовать [JsonIgnore]
     public virtual Tag? Tag { get; set; }
 
     public virtual ICollection<UserPromo> UserPromos { get; set; } = new List<UserPromo>();

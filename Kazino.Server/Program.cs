@@ -14,10 +14,15 @@ options.UseNpgsql(connectionString));
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("PSQLCon"));
 });*/
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // Ð˜Ð»Ð¸ ReferenceHandler.IgnoreCycles - ÐÐ¾ Ð²Ð¼ÐµÑÑ‚Ð¾ ÑÑ‚Ð¾Ð³Ð¾, Ð½Ð°Ð´Ð¾ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÑŒ DTO
+    });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Host.UseSerilog((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration)); // ×òåíèå êîíôèãóðàöèè èç appsettings.json
+builder.Host.UseSerilog((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration));
 
 builder.Services.AddScoped<IPromoRepository,PromoRepository>();
 
