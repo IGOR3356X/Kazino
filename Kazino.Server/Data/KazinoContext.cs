@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Kazino.Server.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kazino.Server.Models;
+namespace Kazino.Server.Data;
 
 public partial class KazinoContext : DbContext
 {
