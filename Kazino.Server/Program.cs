@@ -1,6 +1,7 @@
 using Kazino.Server.Data;
 using Kazino.Server.Interfaces;
 using Kazino.Server.Repository;
+using Kazino.Server.Servies.Promo;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Text.Json.Serialization;
@@ -14,17 +15,15 @@ options.UseNpgsql(connectionString));
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("PSQLCon"));
 });*/
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // Или ReferenceHandler.IgnoreCycles - Но вместо этого, надо использовать DTO
-    });
+builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Host.UseSerilog((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration));
 
 builder.Services.AddScoped<IPromoRepository,PromoRepository>();
+builder.Services.AddScoped<IPromoServies,PromoServies>();
+//builder.Services.AddScoped<PromoServies>();
 
 var app = builder.Build();
 

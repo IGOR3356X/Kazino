@@ -1,4 +1,5 @@
-﻿using Kazino.Server.Models;
+﻿using Kazino.Server.Dtos.Promo;
+using Kazino.Server.Models;
 
 namespace Kazino.Server.Interfaces
 {

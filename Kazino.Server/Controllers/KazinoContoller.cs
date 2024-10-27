@@ -1,5 +1,10 @@
 ﻿using Kazino.Server.Data;
+using Kazino.Server.Dtos.Promo;
 using Kazino.Server.Interfaces;
+using Kazino.Server.Mappers;
+using Kazino.Server.Repository;
+using Kazino.Server.Servies.Promo;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kazino.Server.Controllers
@@ -9,26 +14,27 @@ namespace Kazino.Server.Controllers
     public class KazinoContoller : ControllerBase
     {
         private readonly KazinoContext _context;
-        private readonly IPromoRepository _promoRepository;
+        private readonly IPromoServies _promoServies;
 
-        public KazinoContoller(KazinoContext context,IPromoRepository repository)
+        public KazinoContoller(KazinoContext context,IPromoServies promoServies)
         {
             _context = context;
-            _promoRepository = repository;
+            _promoServies = promoServies;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetPromo()
         {
-            var promoList = await _promoRepository.GetAllAsync();
+            var promoList = await _promoServies.GetAllPromo();
+            //await _promoRepository.GetAllAsync();
 
             return Ok(promoList);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPromoById([FromRoute] int id)
+        public async Task<IActionResult> GetId([FromRoute] int id)
         {
-            var getId = await _promoRepository.GetById(id);
+            var getId = await _promoServies.GetPromoById(id);
 
             if (getId == null)
             {
@@ -38,12 +44,12 @@ namespace Kazino.Server.Controllers
             return Ok(getId);
 
         }
-
+        
         //[HttpPost]
         //public async Task<IActionResult> CreatePromo()
         //{
 
         //}
-        
+
     }
 }
