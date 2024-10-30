@@ -26,7 +26,7 @@ namespace Kazino.Server.Servies.Promo
 
         public async Task<PromoDto?> GetPromoById(int id)
         {
-            var promoRow = await _promoRepo.GetById(id);
+            var promoRow = await _promoRepo.GetByIdAsync(id);
 
             if (promoRow == null)
             {
@@ -36,6 +36,36 @@ namespace Kazino.Server.Servies.Promo
             {
                 return promoRow.ToPromoDto();
             }
+        }
+
+        public async Task<PromoDto> CreatePromo(CreatePromoRequestDto createPromo)
+        {
+            var promoModel = createPromo.ToPromoFromCreateDto();
+            var answer = await _promoRepo.CreatePromoAsync(promoModel);
+            return answer.ToPromoDto();
+        }
+
+        public async Task<bool> DeletePromo(int id)
+        {
+            var deletedEntry = await _promoRepo.DeletePromoAsync(id);
+            if (deletedEntry == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<PromoDto?> UpdatePromo(int id, UpdatePromoRequestDto updatePromo)
+        {
+            var promoModel = await _promoRepo.UpdatePromoAsync(id, updatePromo);
+
+            if (promoModel == null)
+            {
+                return null;
+            }
+
+            return promoModel.ToPromoDto();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Kazino.Server.Models;
 
@@ -21,8 +22,10 @@ public partial class Promo
 
     public string? Image { get; set; }
 
+    [JsonPropertyName("startDatetime")]
     public DateTime? StartDatetime { get; set; }
 
+    [JsonPropertyName("endDatetime")]
     public DateTime? EndDatime { get; set; }
 
     public int? TagId { get; set; }

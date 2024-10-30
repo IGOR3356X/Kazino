@@ -45,11 +45,39 @@ namespace Kazino.Server.Controllers
 
         }
         
-        //[HttpPost]
-        //public async Task<IActionResult> CreatePromo()
-        //{
+        [HttpPost]
+        public async Task<IActionResult> CreatePromo([FromBody] CreatePromoRequestDto createPromo) 
+        {
+            var createResult = await _promoServies.CreatePromo(createPromo);
+            return CreatedAtAction(nameof(GetId), new { createResult.Id }, createResult);
+        }
 
-        //}
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> DeletePromo([FromRoute] int id)
+        {
+            var deleteResult = await _promoServies.DeletePromo(id);
 
+            if(deleteResult == false)
+            {
+                return NotFound();
+            }
+
+            return NoContent(); 
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> UpdatePromo(int id,UpdatePromoRequestDto updatePromo)
+        {
+            var updateResult = await _promoServies.UpdatePromo(id, updatePromo);
+
+            if(updatePromo == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(updateResult);
+        }
     }
 }
